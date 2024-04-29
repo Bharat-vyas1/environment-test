@@ -1,0 +1,19 @@
+{
+  "something_went_wrong_please_try_again": "Ada yang tidak beres, coba lagi nanti!",
+  "phone_number_is_required": "Nomor telepon harus diisi",
+  "phone_number_is_too_long": "Nomor telepon terlalu panjang",
+  "country_code_is_required": "Kode negara harus diisi",
+  "country_code_is_too_long": "Kode negara terlalu panjang",
+  "password_should_be_string": "kata sandi harus berupa string",
+  "password_is_required": "kata sandi harus diisi",
+  "password_is_too_long": "kata sandi terlalu panjang",
+  "accept_language_header_is_required": "Header Accept-Language harus diisi",
+  "user_with_this_phone_number_not_found": "Pengguna dengan nomor telepon ini tidak ditemukan",
+  "invalid_password": "Kata sandi salah",
+  "user_already_exists": "Pengguna sudah ada",
+  "token_expired": "Token kedaluwarsa",
+  "token_required": "Token harus diisi",
+  "user_not_found": "Pengguna tidak ditemukan",
+  "Unauthorized": "Tidak sah",
+  "session_not_found": "Sesi tidak ditemukan"
+}

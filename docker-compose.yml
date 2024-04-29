@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=K4hvdQ9tj9
+      - POSTGRES_USER=postgres
+
+  sso-api-dev:
+    build: ./
+    container_name: sso-api-dev
+    restart: unless-stopped
+    command: ["sleep", "100000"]
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_NAME=dayatani_dev_api
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=K4hvdQ9tj9
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - JWT_SECRET=Zja6eUlqi1JtEllvhE1WICimwufwqJ82
+      - JWT_ACCESS_TOKEN_EXPIRATION=1hr
+      - JWT_REFRESH_TOKEN_EXPIRATION=24hr
+      - CRYPT_KEY=test

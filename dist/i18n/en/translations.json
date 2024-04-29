@@ -1,0 +1,18 @@
+{
+  "something_went_wrong_please_try_again": "Something went wrong, please try again",
+  "phone_number_is_required": "phone number is required",
+  "phone_number_is_too_long": "phone number is too long",
+  "country_code_is_required": "country code is required",
+  "country_code_is_too_long": "country code is too long",
+  "password_should_be_string": "password should be string",
+  "password_is_required": "password is required",
+  "password_is_too_long": "password is too long",
+  "accept_language_header_is_required": "accept language header is required",
+  "user_with_this_phone_number_not_found": "user with this phone number not found",
+  "invalid_password": "invalid password",
+  "user_already_exists": "user already exists",
+  "token_expired": "token expired",
+  "token_required": "token required",
+  "user_not_found": "user not found",
+  "session_not_found": "session not found"
+}
