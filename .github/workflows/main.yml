@@ -2,13 +2,12 @@ name: environment-test
 on:
   push:
     branches:
-      #- main
       - dev
   workflow_dispatch:
 
 jobs:
 
-  dev:
+  dev-deployment:
     name: deploy on dev
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
@@ -55,7 +54,7 @@ jobs:
           MSG_MINIMAL: event,actions url  
     
 
-  prod:
+  prod-deployment:
     name: deploy on prod
     runs-on: ubuntu-latest
     environment:
