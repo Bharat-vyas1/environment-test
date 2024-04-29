@@ -7,11 +7,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
 
+  dev:
+    name: deploy on dev
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps: 
+    
       - name: Branch Name
         run: |
           echo "Host: $GITHUB_REF_NAME"
@@ -25,21 +29,35 @@ jobs:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}     
-
-
+      - name: "Build and push Docker image"
+        run: |
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
+    
 
   prod:
-    name: deploy on dev
+    name: deploy on prod
     if: github.ref == 'refs/heads/main'
-    needs: [build]
     runs-on: ubuntu-latest
     environment:
       name: prod
     steps: 
+    
+      - name: Branch Name
+        run: |
+          echo "Host: $GITHUB_REF_NAME"
 
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3              
+
+      - name: 'Setup Azure Container Registry'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}     
       - name: "Build and push Docker image"
         run: |
-          ls -al
           docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
     
