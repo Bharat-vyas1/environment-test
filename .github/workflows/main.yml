@@ -5,3 +5,16 @@ on:
       - main
       - dev
   workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Branch Name
+        run: |
+          echo "Host: $GITHUB_REF_NAME"
+
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3              
