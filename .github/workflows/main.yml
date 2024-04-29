@@ -57,7 +57,6 @@ jobs:
 
   prod:
     name: deploy on prod
-    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: prod
