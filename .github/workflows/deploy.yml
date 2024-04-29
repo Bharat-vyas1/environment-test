@@ -1,4 +1,4 @@
-name: environment-test
+name: environment-test-new
 
 on:
   push:
@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+    env:
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      SERVER_KEY: ${{ secrets.SERVER_KEY }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}      
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
