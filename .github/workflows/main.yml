@@ -2,7 +2,7 @@ name: environment-test
 on:
   push:
     branches:
-      - main
+      #- main
       - dev
   workflow_dispatch:
 
