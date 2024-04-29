@@ -7,3 +7,4 @@ COPY . /code
 RUN npm run build
 ENTRYPOINT [ "/bin/bash", "/code/entrypoint.sh" ]
 CMD ["npm", "run" , "start:prod"]
+# END
