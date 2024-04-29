@@ -43,6 +43,16 @@ jobs:
           script: |
             cd /home/ubuntu/services/test
             /bin/bash workflow_helper.sh ${{ github.run_number }}          
+
+      - name: Send Slack notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets[env.SLACK_WEBHOOK_URL] }}
+          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          SLACK_FOOTER: "Dayatani"
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: event,actions url  
     
 
   prod:
@@ -81,3 +91,12 @@ jobs:
             cd /home/ubuntu/services/test
             /bin/bash workflow_helper.sh ${{ github.run_number }}
           
+      - name: Send Slack notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets[env.SLACK_WEBHOOK_URL] }}
+          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          SLACK_FOOTER: "Dayatani"
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: event,actions url  
