@@ -1,0 +1,46 @@
+# deploy.yml
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ matrix.environment }}
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: 'Setup Azure Container Registry'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}     
+
+      - name: "Build and push Docker image"
+        run: |
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ matrix.environment }}-${{ github.run_number }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ matrix.environment }}-${{ github.run_number }}      
+
+      - name: Deploy container to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            cd /home/ubuntu/services/warehouse
+            ls -al
+
+      - name: Send Slack notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+          SLACK_FOOTER: "Dayatani"
+          SLACK_COLOR: ${{ job.status }}
+          MSG_MINIMAL: event,actions url  
