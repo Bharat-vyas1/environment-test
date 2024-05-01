@@ -8,6 +8,8 @@ on:
         description: environment to deploy to
         required: true
     secrets:
+      ENVIRONMENT: 
+        required: true
       REGISTRY_LOGIN_SERVER:
         required: true
       REGISTRY_USERNAME:
