@@ -10,12 +10,12 @@ on:
     secrets:
       ENVIRONMENT:
         required: true
-      REGISTRY_LOGIN_SERVER:
-        required: true
-      REGISTRY_USERNAME:
-        required: true
-      REGISTRY_PASSWORD:
-        required: true                
+    #   REGISTRY_LOGIN_SERVER:
+    #     required: true
+    #   REGISTRY_USERNAME:
+    #     required: true
+    #   REGISTRY_PASSWORD:
+    #     required: true                
 
 jobs:
   deploy:
