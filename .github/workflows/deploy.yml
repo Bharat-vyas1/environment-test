@@ -21,15 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-    # secrets:
-    #   REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-    #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-    #   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-    #   SERVER_HOST: ${{ secrets.SERVER_HOST }}
-    #   SERVER_USER: ${{ secrets.SERVER_USER }}
-    #   SERVER_KEY: ${{ secrets.SERVER_KEY }}
-    #   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}      
-    #   GITHUB_ENVIRONMENT: ${{ secrets.ENVIRONMENT}}
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
@@ -41,10 +32,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      # - name: "Build and push Docker image"
-      #   run: |
-      #     docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:$${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
-      #     docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
+      - name: "Build and push Docker image"
+        run: |
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:$${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
 
       - name: Deploy container to server
         uses: appleboy/ssh-action@master
