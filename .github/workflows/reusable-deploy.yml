@@ -10,6 +10,12 @@ on:
     secrets:
       ENVIRONMENT:
         required: true
+      REGISTRY_LOGIN_SERVER:
+        required: true
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_PASSWORD:
+        required: true                
 
 jobs:
   deploy:
@@ -18,24 +24,35 @@ jobs:
     environment: ${{ inputs.environment }}
     
     steps:
-    - name: Dump Password
-      run: |
-        echo Environment is $ENVIRONMENT
-        if [[ $ENVIRONMENT == *"prod"* ]]; then
-          echo "This is the prod Environment!"
-        else
-          echo "This is NOT the prod Environment!"
-        fi
-      env:
-        ENVIRONMENT: $ {{ secrets.ENVIRONMENT }}
+      - name: Dump Password
+        run: |
+          echo Environment is $ENVIRONMENT
+          if [[ $ENVIRONMENT == *"prod"* ]]; then
+            echo "This is the prod Environment!"
+          else
+            echo "This is NOT the prod Environment!"
+          fi
+        env:
+          ENVIRONMENT: $ {{ secrets.ENVIRONMENT }}
         #PASSWORD: ${{ secrets.PASSWORD }}
 
-      # - name: 'Checkout GitHub Action'
-      #   uses: actions/checkout@v3
+ 
+      - name: Branch Name
+        run: |
+          echo "Host: $GITHUB_REF_NAME"      
 
-      # - name: 'Setup Azure Container Registry'
-      #   uses: azure/docker-login@v1
-      #   with:
-      #     login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-      #     username: ${{ secrets.REGISTRY_USERNAME }}
-      #     password: ${{ secrets.REGISTRY_PASSWORD }}          
+
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: 'Setup Azure Container Registry'
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}          
+        env:
+          ENVIRONMENT: $ {{ secrets.ENVIRONMENT }}
+          REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}                     

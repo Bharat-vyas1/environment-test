@@ -14,11 +14,11 @@
 #     runs-on: ubuntu-latest
 #     environment:
 #       name: dev
-#     steps: 
+    # steps: 
     
-#       - name: Branch Name
-#         run: |
-#           echo "Host: $GITHUB_REF_NAME"
+    #   - name: Branch Name
+    #     run: |
+    #       echo "Host: $GITHUB_REF_NAME"
 
 #       - name: 'Checkout GitHub Action'
 #         uses: actions/checkout@v3              
