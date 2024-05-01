@@ -45,7 +45,8 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd /home/ubuntu/services/sso-api
-            ls -al
+            ls -al 
+            cat variables.env
 
 
       # - name: Send Slack notification
