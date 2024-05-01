@@ -6,21 +6,30 @@ on:
       #- main
       - dev
   workflow_dispatch:
+    secrets:
+      ENVIRONMENT: 
+      REGISTRY_LOGIN_SERVER:
+      REGISTRY_USERNAME:
+      REGISTRY_PASSWORD:        
+      SERVER_HOST: 
+      SERVER_USER: 
+      SERVER_KEY: 
+      SLACK_WEBHOOK_URL:      
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-    secrets:
-      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      SERVER_HOST: ${{ secrets.SERVER_HOST }}
-      SERVER_USER: ${{ secrets.SERVER_USER }}
-      SERVER_KEY: ${{ secrets.SERVER_KEY }}
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}      
-      GITHUB_ENVIRONMENT: ${{ secrets.ENVIRONMENT}}
+    # secrets:
+    #   REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+    #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+    #   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+    #   SERVER_HOST: ${{ secrets.SERVER_HOST }}
+    #   SERVER_USER: ${{ secrets.SERVER_USER }}
+    #   SERVER_KEY: ${{ secrets.SERVER_KEY }}
+    #   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}      
+    #   GITHUB_ENVIRONMENT: ${{ secrets.ENVIRONMENT}}
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
@@ -32,10 +41,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: "Build and push Docker image"
-        run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:$${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
+      # - name: "Build and push Docker image"
+      #   run: |
+      #     docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:$${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
+      #     docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{ secrets.ENVIRONMENT}}-${{ github.run_number }}
 
       - name: Deploy container to server
         uses: appleboy/ssh-action@master
@@ -47,12 +56,12 @@ jobs:
             cd /home/ubuntu/services/sso-api
             ls -al
 
-      - name: Send Slack notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          SLACK_FOOTER: "Dayatani"
-          SLACK_COLOR: ${{ job.status }}
-          MSG_MINIMAL: event,actions url
+      # - name: Send Slack notification
+      #   if: always()
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #     SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+      #     SLACK_FOOTER: "Dayatani"
+      #     SLACK_COLOR: ${{ job.status }}
+      #     MSG_MINIMAL: event,actions url
