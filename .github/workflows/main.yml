@@ -1,102 +1,102 @@
-name: environment-test
-on:
-  push:
-    branches:
-      - main
-      - dev
-  workflow_dispatch:
+# name: environment-test
+# on:
+#   push:
+#     branches:
+#       - main
+#       - dev
+#   workflow_dispatch:
 
-jobs:
+# jobs:
 
-  dev:
-    name: deploy on dev
-    if: github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
-    environment:
-      name: dev
-    steps: 
+#   dev:
+#     name: deploy on dev
+#     if: github.ref == 'refs/heads/dev'
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: dev
+#     steps: 
     
-      - name: Branch Name
-        run: |
-          echo "Host: $GITHUB_REF_NAME"
+#       - name: Branch Name
+#         run: |
+#           echo "Host: $GITHUB_REF_NAME"
 
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3              
+#       - name: 'Checkout GitHub Action'
+#         uses: actions/checkout@v3              
 
-      - name: 'Setup Azure Container Registry'
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}     
-      - name: "Build and push Docker image"
-        run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
+#       - name: 'Setup Azure Container Registry'
+#         uses: azure/docker-login@v1
+#         with:
+#           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+#           username: ${{ secrets.REGISTRY_USERNAME }}
+#           password: ${{ secrets.REGISTRY_PASSWORD }}     
+#       - name: "Build and push Docker image"
+#         run: |
+#           docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
+#           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
 
-      - name: Deploy container to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          script: |
-            cd /home/ubuntu/services/test
-            /bin/bash workflow_helper.sh ${{ github.run_number }}          
+#       - name: Deploy container to server
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_KEY }}
+#           script: |
+#             cd /home/ubuntu/services/test
+#             /bin/bash workflow_helper.sh ${{ github.run_number }}          
 
-      - name: Send Slack notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          SLACK_FOOTER: "Dayatani"
-          SLACK_COLOR: ${{ job.status }}
-          MSG_MINIMAL: event,actions url  
+#       - name: Send Slack notification
+#         if: always()
+#         uses: rtCamp/action-slack-notify@v2
+#         env:
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#           SLACK_FOOTER: "Dayatani"
+#           SLACK_COLOR: ${{ job.status }}
+#           MSG_MINIMAL: event,actions url  
     
 
-  prod:
-    name: deploy on prod
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    environment:
-      name: prod
-    steps: 
+#   prod:
+#     name: deploy on prod
+#     if: github.ref == 'refs/heads/main'
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: prod
+#     steps: 
     
-      - name: Branch Name
-        run: |
-          echo "Host: $GITHUB_REF_NAME"
+#       - name: Branch Name
+#         run: |
+#           echo "Host: $GITHUB_REF_NAME"
 
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3              
+#       - name: 'Checkout GitHub Action'
+#         uses: actions/checkout@v3              
 
-      - name: 'Setup Azure Container Registry'
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_PASSWORD }}     
-      - name: "Build and push Docker image"
-        run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
+#       - name: 'Setup Azure Container Registry'
+#         uses: azure/docker-login@v1
+#         with:
+#           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+#           username: ${{ secrets.REGISTRY_USERNAME }}
+#           password: ${{ secrets.REGISTRY_PASSWORD }}     
+#       - name: "Build and push Docker image"
+#         run: |
+#           docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}
+#           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/sso-api:${{secrets.ENVIRONMENT}}-${{ github.run_number }}      
     
-      - name: Deploy container to server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          script: |
-            cd /home/ubuntu/services/test
-            /bin/bash workflow_helper.sh ${{ github.run_number }}
+#       - name: Deploy container to server
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_KEY }}
+#           script: |
+#             cd /home/ubuntu/services/test
+#             /bin/bash workflow_helper.sh ${{ github.run_number }}
           
-      - name: Send Slack notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-          SLACK_FOOTER: "Dayatani"
-          SLACK_COLOR: ${{ job.status }}
-          MSG_MINIMAL: event,actions url  
+#       - name: Send Slack notification
+#         if: always()
+#         uses: rtCamp/action-slack-notify@v2
+#         env:
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+#           SLACK_MESSAGE: "Status: ${{ job.status }}\nBranch: ${{ env.GITHUB_REF_NAME }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+#           SLACK_FOOTER: "Dayatani"
+#           SLACK_COLOR: ${{ job.status }}
+#           MSG_MINIMAL: event,actions url  
