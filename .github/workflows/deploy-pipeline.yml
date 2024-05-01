@@ -1,6 +1,11 @@
 name: Deploy Pipeline
 
 on:
+  push:
+    branches:
+      - dev
+      #- main
+  #workflow_call: 
   workflow_dispatch:
 
 jobs:
