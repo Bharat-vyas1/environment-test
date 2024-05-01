@@ -34,7 +34,7 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd /home/ubuntu/services/warehouse
-            ls -al
+            ls -al 
 
       - name: Send Slack notification
         if: always()
