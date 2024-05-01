@@ -7,13 +7,13 @@ on:
         type: string
         description: environment to deploy to
         required: true
-    secrets:
-      REGISTRY_LOGIN_SERVER:
-        required: true
-      REGISTRY_USERNAME:
-        required: true
-      REGISTRY_PASSWORD:
-        required: true                
+    # secrets:
+    #   REGISTRY_LOGIN_SERVER:
+    #     required: true
+    #   REGISTRY_USERNAME:
+    #     required: true
+    #   REGISTRY_PASSWORD:
+    #     required: true                
 
 jobs:
   deploy:
@@ -38,8 +38,8 @@ jobs:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}          
-        env:
-          ENVIRONMENT: $ {{ secrets.ENVIRONMENT }}
-          REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}                     
+        # env:
+        #   ENVIRONMENT: $ {{ secrets.ENVIRONMENT }}
+        #   REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        #   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+        #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}                     
