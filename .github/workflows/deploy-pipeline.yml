@@ -16,9 +16,9 @@ jobs:
       environment: dev
     secrets:
       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }} 
+      # REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      # REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      # REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }} 
 
       
   deploy_prod:
@@ -30,7 +30,7 @@ jobs:
       environment: prod
     secrets:
       ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}       
+      # REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      # REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      # REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}       
 
