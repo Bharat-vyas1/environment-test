@@ -6,7 +6,7 @@ on:
     branches:
       - dev
       #- main
-  workflow_call:
+  #workflow_call:
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         environment: ['dev']
-    uses: Bharat-vyas1/environment-test/.github/workflows/deploy2.yml@391193a7679410c4925c7778e8ba9a2c811e2b8f
+    uses: ./.github/workflows/deploy2.yml
 
   prod-deployment:
     #needs: test-lint-build
