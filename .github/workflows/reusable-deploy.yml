@@ -7,13 +7,13 @@ on:
         type: string
         description: environment to deploy to
         required: true
-    # secrets:
-    #   REGISTRY_LOGIN_SERVER:
-    #     required: true
-    #   REGISTRY_USERNAME:
-    #     required: true
-    #   REGISTRY_PASSWORD:
-    #     required: true                
+    secrets:
+      REGISTRY_LOGIN_SERVER:
+        required: true
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_PASSWORD:
+        required: true                
 
 jobs:
   deploy:

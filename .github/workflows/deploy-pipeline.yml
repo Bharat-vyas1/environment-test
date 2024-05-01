@@ -14,11 +14,11 @@ jobs:
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       environment: dev
-    # secrets:
-    #   ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-    #   REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-    #   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-    #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }} 
+    secrets:
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }} 
 
       
   deploy_prod:
@@ -28,9 +28,9 @@ jobs:
     uses: ./.github/workflows/reusable-deploy.yml
     with:
       environment: prod
-    # secrets:
-    #   ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-    #   REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-    #   REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-    #   REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}       
+    secrets:
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+      REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}       
 
