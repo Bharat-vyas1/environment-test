@@ -54,6 +54,7 @@ jobs:
           script: |
             cd /home/ubuntu/services/sso-api
             cat docker-compose.yml
+            ls -al
 
 
       - name: Send Slack notification
