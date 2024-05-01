@@ -11,9 +11,7 @@ on:
       ENVIRONMENT: 
       REGISTRY_LOGIN_SERVER:
       REGISTRY_USERNAME:
-        required: true
-      REGISTRY_PASSWORD:
-        required: true                
+      REGISTRY_PASSWORD:              
 
 jobs:
   deploy:
@@ -23,11 +21,9 @@ jobs:
     
     steps:
 
- 
       - name: Branch Name
         run: |
           echo "Host: $GITHUB_REF_NAME"      
-
 
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
