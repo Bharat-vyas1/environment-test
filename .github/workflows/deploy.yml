@@ -1,3 +1,9 @@
+# In this, first we are selecting the environment on the basis of branch (github.ref == 'refs/heads/main' && 'prod' || 'dev'), 
+# As per the branch it will auto pick the secrets that we have created within the Environment section of github 
+# this is also dpoing the same thing as main.yml but in more dynamic way, less code 
+# if branch is main then it will pick Environment as prod, and in that case it will pick all the secrets of prod and deploy on prod serevr 
+# Now if we want to call a workflow from existing workflow we can refer deploy-pipeline.yml (Just like one jenkins-job calls another jenkins-job)
+
 name: environment-test-new
 
 on:
@@ -47,6 +53,7 @@ jobs:
             cd /home/ubuntu/services/sso-api
             ls -al 
             cat variables.env
+# We can execute workflow_helper.sh script over here             
 
 
       # - name: Send Slack notification

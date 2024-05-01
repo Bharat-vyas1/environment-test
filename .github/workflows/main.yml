@@ -1,3 +1,9 @@
+# We have created 2 environments within the repo --> settings --> environment (prod, dev)
+# Within those 2 environments we have created different secrets like REGISTRY_LOGIN_SERVER, REGISTRY_USERNAME, REGISTRY_password, SERVER_HOST ...
+# Now here we are using dev-deployment and dev-deployment by specifying the "environment: name: dev" and "environment: name prod" 
+# If branch = dev then it will pick dev environemnt and pick the secrets values from dev-environemnts and if branch = main then it will pick prod environment and it will pick secrets from prod-environment
+# Now we can convert this in more dynamic style, that we have done in deploy.yml
+
 name: environment-test
 on:
   push:
@@ -86,8 +92,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            cd /home/ubuntu/services/test
-            /bin/bash workflow_helper.sh ${{ github.run_number }}
+            cd /home/ubuntu/services/sso-api
+            ls -al
+# We can execute workflow_helper.sh script over here             
           
       - name: Send Slack notification
         if: always()
