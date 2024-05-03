@@ -14,8 +14,8 @@ on:
       - staging
   release:
     types: [published]
-    branches:
-      - main      
+    # branches:
+    #   - main      
   workflow_dispatch:
   
     # secrets:
