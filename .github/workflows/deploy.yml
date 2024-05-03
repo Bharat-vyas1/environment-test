@@ -5,16 +5,21 @@ on:
     branches:
       #- main
       - dev
+      - staging
+  release:
+    types: [published]
+    branches:
+      - main        
   workflow_dispatch:
-    secrets:
-      ENVIRONMENT: 
-      REGISTRY_LOGIN_SERVER:
-      REGISTRY_USERNAME:
-      REGISTRY_PASSWORD:        
-      SERVER_HOST: 
-      SERVER_USER: 
-      SERVER_KEY: 
-      SLACK_WEBHOOK_URL:      
+    # secrets:
+    #   ENVIRONMENT: 
+    #   REGISTRY_LOGIN_SERVER:
+    #   REGISTRY_USERNAME:
+    #   REGISTRY_PASSWORD:        
+    #   SERVER_HOST: 
+    #   SERVER_USER: 
+    #   SERVER_KEY: 
+    #   SLACK_WEBHOOK_URL:      
 
 jobs:
   deploy:
