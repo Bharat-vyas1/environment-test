@@ -12,7 +12,12 @@ on:
       #- main
       - dev
       - staging
+  release:
+    types: [published]
+    branches:
+      - main      
   workflow_dispatch:
+  
     # secrets:
     #   ENVIRONMENT: 
     #   REGISTRY_LOGIN_SERVER:
