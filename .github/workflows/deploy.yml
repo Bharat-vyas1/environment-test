@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       #name: ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-      name: ${{ github.ref == 'refs/heads/main' && 'prod' || github.ref == 'refs/heads/staging' && 'stage' || 'dev' }}
+      name: ${{ github.ref == 'refs/heads/dev' && 'dev' || github.ref == 'refs/heads/staging' && 'stage' || 'prod' }}
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
